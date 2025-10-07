@@ -51,6 +51,7 @@ public abstract class IntegrationTest<TStartup> : LoggingTest, IAsyncLifetime, I
         AutoFaker = fixture.AutoFaker;
         Faker = AutoFaker.Faker;
 
+        // IntegrationTest should not own this sink
         var outputSink = Resolve<IInjectableTestOutputSink>();
         outputSink.Inject(testOutputHelper);
 
@@ -113,7 +114,12 @@ public abstract class IntegrationTest<TStartup> : LoggingTest, IAsyncLifetime, I
     {
         GC.SuppressFinalize(this);
 
+        if (_lazyClient is { IsValueCreated: true })
+            _lazyClient.Value.Dispose();
+
         if (Scope != null)
             await Scope.Value.DisposeAsync().NoSync();
+
+        Instance = null;
     }
 }
