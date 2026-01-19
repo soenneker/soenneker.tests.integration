@@ -112,8 +112,6 @@ public abstract class IntegrationTest<TStartup> : LoggingTest, IAsyncLifetime, I
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
-
         if (_lazyClient is { IsValueCreated: true })
             _lazyClient.Value.Dispose();
 
