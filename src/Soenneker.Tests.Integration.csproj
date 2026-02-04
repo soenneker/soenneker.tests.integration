@@ -47,6 +47,6 @@
         <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.184" />
         <PackageReference Include="Soenneker.Fixtures.Integration" Version="4.0.401" />
         <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.124" />
-        <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2267" />
+        <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2268" />
     </ItemGroup>
 </Project>
