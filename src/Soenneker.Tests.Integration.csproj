@@ -44,7 +44,7 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Extensions.ServiceProvider" Version="4.0.306" />
-        <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.190" />
+        <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.191" />
         <PackageReference Include="Soenneker.Fixtures.Integration" Version="4.0.410" />
         <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.126" />
         <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2276" />
