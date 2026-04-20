@@ -9,11 +9,11 @@ namespace Soenneker.Tests.Integration.Tests;
 
 public sealed class Host : UnitTestHost
 {
-    public override ValueTask Initialize()
+    public override Task InitializeAsync()
     {
         SetupIoC(Services);
 
-        return base.Initialize();
+        return base.InitializeAsync();
     }
 
     private static void SetupIoC(IServiceCollection services)
