@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -18,9 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Tests.HostedUnit" Version="4.0.4" />
+        <PackageReference Include="Soenneker.Tests.HostedUnit" Version="4.0.7" />
         <PackageReference Include="Soenneker.Utils.Test" Version="4.0.314" />
-        <PackageReference Include="TUnit" Version="1.37.0" />
+        <PackageReference Include="TUnit" Version="1.37.10" />
     </ItemGroup>
 
     <ItemGroup>
