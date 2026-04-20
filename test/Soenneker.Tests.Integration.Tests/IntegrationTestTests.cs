@@ -1,18 +1,13 @@
-﻿using Soenneker.Tests.FixturedUnit;
-using Xunit;
+﻿using Soenneker.TestHosts.Unit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Tests.Integration.Tests;
 
-[Collection("Collection")]
-public class IntegrationTestTests : FixturedUnitTest
+[ClassDataSource<UnitTestHost>(Shared = SharedType.PerTestSession)]
+public sealed class IntegrationTestTests(UnitTestHost host) : HostedUnitTest(host)
 {
-    public IntegrationTestTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
-    {
-    }
-
-    [Fact]
+    [Test]
     public void Default()
     {
-
     }
 }

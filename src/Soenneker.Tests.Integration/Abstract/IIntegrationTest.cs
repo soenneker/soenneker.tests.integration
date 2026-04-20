@@ -7,14 +7,15 @@ using System.Diagnostics.Contracts;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using TUnit.Core.Interfaces;
 
 namespace Soenneker.Tests.Integration.Abstract;
 
 /// <summary>
-/// An abstract xUnit test class for end-to-end integration (involving WebApplicationFactory) tests
+/// Represents an integration test over a <see cref="WebApplicationFactory{TEntryPoint}"/>.
 /// </summary>
-/// <typeparam name="TStartup">The startup class for the application under test.</typeparam>
-public interface IIntegrationTest<TStartup> : IAsyncDisposable where TStartup : class
+/// <typeparam name="TStartup">The startup or entry point type for the application under test.</typeparam>
+public interface IIntegrationTest<TStartup> : IAsyncInitializer, IAsyncDisposable where TStartup : class
 {
     /// <summary>
     /// The WebApplicationFactory used for creating test HTTP clients.
@@ -22,7 +23,7 @@ public interface IIntegrationTest<TStartup> : IAsyncDisposable where TStartup : 
     WebApplicationFactory<TStartup> Factory { get; }
 
     /// <summary>
-    /// Fully authenticated, admin test client.
+    /// Fully authenticated admin test client.
     /// </summary>
     HttpClient Client { get; }
 
@@ -37,15 +38,9 @@ public interface IIntegrationTest<TStartup> : IAsyncDisposable where TStartup : 
     AutoFaker AutoFaker { get; }
 
     /// <summary>
-    /// The current async service scope, used for resolving scoped services.
+    /// The current async service scope used for resolving scoped services.
     /// </summary>
-    AsyncServiceScope? Scope { get; set; }
-
-    /// <summary>
-    /// Initializes the integration test (e.g., creates HTTP clients).
-    /// </summary>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-    ValueTask InitializeAsync();
+    AsyncServiceScope? Scope { get; }
 
     /// <summary>
     /// Resolves a service from the application service provider.
@@ -54,7 +49,7 @@ public interface IIntegrationTest<TStartup> : IAsyncDisposable where TStartup : 
     /// <param name="scoped">If true, resolves from a scoped provider.</param>
     /// <returns>The resolved service.</returns>
     [Pure]
-    T Resolve<T>(bool scoped = false);
+    T Resolve<T>(bool scoped = false) where T : notnull;
 
     /// <summary>
     /// Waits until the background queue has finished processing all items.

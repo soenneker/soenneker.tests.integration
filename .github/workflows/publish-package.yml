@@ -56,8 +56,7 @@ jobs:
         run: dotnet build test/Soenneker.Tests.Integration.Tests/Soenneker.Tests.Integration.Tests.csproj --configuration Release --no-restore --verbosity minimal
 
       - name: Test
-        run: dotnet test test/Soenneker.Tests.Integration.Tests/Soenneker.Tests.Integration.Tests.csproj --configuration Release --no-build --no-restore --verbosity normal
-
+        run: dotnet test --project test/Soenneker.Tests.Integration.Tests/Soenneker.Tests.Integration.Tests.csproj --configuration Release --no-build --no-restore --verbosity normal
 
       - name: Restore library
         run: dotnet restore src/Soenneker.Tests.Integration/Soenneker.Tests.Integration.csproj --verbosity minimal
