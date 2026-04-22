@@ -1,10 +1,8 @@
-﻿using Soenneker.TestHosts.Unit;
-using Soenneker.Tests.HostedUnit;
+using Soenneker.Tests.Unit;
 
 namespace Soenneker.Tests.Integration.Tests;
 
-[ClassDataSource<UnitTestHost>(Shared = SharedType.PerTestSession)]
-public sealed class IntegrationTestTests(UnitTestHost host) : HostedUnitTest(host)
+public sealed class IntegrationTestTests : UnitTest
 {
     [Test]
     public void Default()
