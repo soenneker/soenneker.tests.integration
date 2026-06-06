@@ -44,7 +44,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.ServiceProvider" Version="4.0.323" />
+        <PackageReference Include="Soenneker.Extensions.ServiceProvider" Version="4.0.324" />
         <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.271" />
         <PackageReference Include="Soenneker.TestHosts.Integration" Version="4.0.39" />
         <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.143" />
