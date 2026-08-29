@@ -56,6 +56,10 @@ public abstract class IntegrationTest<TStartup> : LoggingTest, IIntegrationTest<
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
+    /// <summary>
+    /// Initializes the Integration Test so it is ready for use.
+    /// </summary>
+    /// <returns>A task that completes when the Integration Test is ready for use.</returns>
     public virtual Task InitializeAsync()
     {
         _lazyClient = new Lazy<HttpClient>(() => Factory.CreateTestHttpClient(ClientUserId, ClientEmail), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -74,6 +78,12 @@ public abstract class IntegrationTest<TStartup> : LoggingTest, IIntegrationTest<
         return Scope!.Value.ServiceProvider.GetRequiredService<T>();
     }
 
+    /// <summary>
+    /// Returns the value produced by static Resolve.
+    /// </summary>
+    /// <typeparam name="T">Type of value handled by the Integration Test.</typeparam>
+    /// <param name="scoped">Whether scoped.</param>
+    /// <returns>The resulting value.</returns>
     [Pure]
     public static T StaticResolve<T>(bool scoped = false) where T : notnull
     {
