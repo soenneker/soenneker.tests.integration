@@ -5,43 +5,67 @@
 
 # Soenneker.Tests.Integration
 
-Represents an integration test over a `WebApplicationFactory{TEntryPoint}`.
+A TUnit base class for HTTP and service-level tests over a shared `WebApplicationFactory` supplied by `IntegrationTestHost`.
 
-## Install
+## Installation
 
 ```bash
 dotnet add package Soenneker.Tests.Integration
 ```
 
-## Quick start
+## Define the host
 
 ```csharp
-using Soenneker.Tests.Integration.Abstract;
+using Soenneker.TestHosts.Integration;
 
-IIntegrationTest<TStartup> integrationTest = /* resolve from DI */;
-var result = integrationTest.Resolve();
+public sealed class Host : IntegrationTestHost
+{
+    public override Task InitializeAsync()
+    {
+        RegisterFactory<Api.Program>("Api");
+        return base.InitializeAsync();
+    }
+}
 ```
 
-Resolves a service from the application service provider.
+The project name identifies the appsettings location expected by `IntegrationTestHost`. See that package's README for the output-directory convention.
 
-## What you get
+## Define the tests
 
-- `IIntegrationTest<TStartup>` — Represents an integration test over a `WebApplicationFactory{TEntryPoint}`.
+```csharp
+using Soenneker.Tests.Integration;
 
-## API at a glance
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class OrdersApiTests : IntegrationTest<Api.Program>
+{
+    public OrdersApiTests(Host host) : base(host)
+    {
+    }
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `IIntegrationTest<TStartup>.Factory` | The WebApplicationFactory used for creating test HTTP clients. | The WebApplicationFactory used for creating test HTTP clients. |
-| `IIntegrationTest<TStartup>.Client` | Fully authenticated admin test client. | Fully authenticated admin test client. |
-| `IIntegrationTest<TStartup>.Faker` | Faker instance for generating fake data. | Faker instance for generating fake data. |
-| `IIntegrationTest<TStartup>.AutoFaker` | AutoFaker instance for generating auto-populated fake data. | AutoFaker instance for generating auto-populated fake data. |
-| `IIntegrationTest<TStartup>.Scope` | The current async service scope used for resolving scoped services. | The current async service scope used for resolving scoped services. |
-| `IIntegrationTest<TStartup>.Resolve(scoped)` | Resolves a service from the application service provider. | The resolved service. |
-| `IIntegrationTest<TStartup>.WaitOnQueueToEmpty(cancellationToken)` | Waits until the background queue has finished processing all items. | A `ValueTask` representing the asynchronous operation. |
-| `IIntegrationTest<TStartup>.CreateScope()` | Creates a new async scope for resolving scoped services. | Returns no value; the requested change is complete when the method returns. |
+    [Test]
+    public async Task Gets_orders()
+    {
+        using HttpResponseMessage response = await Client.GetAsync("/orders");
 
-## Practical notes
+        await Assert.That(response.IsSuccessStatusCode).IsTrue();
+    }
+}
+```
 
-- Cancellation stops pending work; it does not undo work that has already completed.
-- Dispose instances you own when their scope ends so held resources can be released.
+`Client` is created lazily and disposed with the test instance. It uses the test authentication scheme with `ClientUserId` and `ClientEmail`; it does not add an admin role. Use `Factory.CreateTestHttpClient(...)` directly when a test needs another identity, roles, or a JWT.
+
+## Resolving services
+
+```csharp
+OrderRepository repository = Resolve<OrderRepository>(scoped: true);
+```
+
+`Resolve<T>()` uses the application's root provider. `Resolve<T>(scoped: true)` creates one async scope per test instance, reuses it, and disposes it during teardown. `Factory` is owned by the shared host and must not be disposed by individual tests.
+
+## Background work and static resolution
+
+`WaitOnQueueToEmpty(cancellationToken)` polls the application's `IQueueInformationUtil` every 500 milliseconds until processing stops. Supply a bounded cancellation token; the default token allows an unhealthy queue to wait indefinitely.
+
+`StaticResolve<T>()` targets the most recently constructed `IntegrationTest<TEntryPoint>` instance. Avoid it in parallel tests because another instance of the same generic test base can replace the static target; prefer the instance `Resolve<T>()` method.
+
+The base class reuses the host's `Faker` and `AutoFaker`, and resolves logging through the test's application scope.

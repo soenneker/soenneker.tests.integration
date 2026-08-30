@@ -23,7 +23,7 @@ public interface IIntegrationTest<TStartup> : IAsyncInitializer, IAsyncDisposabl
     WebApplicationFactory<TStartup> Factory { get; }
 
     /// <summary>
-    /// Fully authenticated admin test client.
+    /// Gets a client authenticated with the package's fixed test user id and email.
     /// </summary>
     HttpClient Client { get; }
 
