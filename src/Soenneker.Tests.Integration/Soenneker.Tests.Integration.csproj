@@ -51,7 +51,7 @@
         <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2510" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.Task" Version="4.0.130" />
+        <PackageReference Include="Soenneker.Extensions.Task" Version="4.0.131" />
         <PackageReference Include="Soenneker.Extensions.ValueTask" Version="4.0.123" />
     </ItemGroup>
 </Project>
