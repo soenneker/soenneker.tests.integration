@@ -44,10 +44,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.ServiceProvider" Version="4.0.336" />
         <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.359" />
         <PackageReference Include="Soenneker.TestHosts.Integration" Version="4.0.203" />
         <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.158" />
         <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2509" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Soenneker.Extensions.Task" Version="4.0.130" />
+        <PackageReference Include="Soenneker.Extensions.ValueTask" Version="4.0.123" />
     </ItemGroup>
 </Project>
