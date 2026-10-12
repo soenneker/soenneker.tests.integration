@@ -45,13 +45,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.373" />
-        <PackageReference Include="Soenneker.TestHosts.Integration" Version="4.0.221" />
-        <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.160" />
-        <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2517" />
+        <PackageReference Include="Soenneker.Extensions.WebApplicationFactories" Version="4.0.374" />
+        <PackageReference Include="Soenneker.TestHosts.Integration" Version="4.0.227" />
+        <PackageReference Include="Soenneker.Tests.Logging" Version="4.0.161" />
+        <PackageReference Include="Soenneker.Utils.BackgroundQueue" Version="4.0.2523" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.Task" Version="4.0.132" />
-        <PackageReference Include="Soenneker.Extensions.ValueTask" Version="4.0.125" />
+        <PackageReference Include="Soenneker.Extensions.Task" Version="4.0.133" />
+        <PackageReference Include="Soenneker.Extensions.ValueTask" Version="4.0.126" />
     </ItemGroup>
 </Project>
